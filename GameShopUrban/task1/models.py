@@ -3,7 +3,7 @@ from django.db import models
 
 class Buyer(models.Model):
     name = models.CharField(max_length=150)
-    balance = models.DecimalField(decimal_places=2, max_digits=8)
+    balance = models.DecimalField(decimal_places=2, max_digits=8, default=0.00)
     age = models.IntegerField()
 
     def __str__(self):

@@ -1,0 +1,4 @@
+{% extends "menu.html" %}{% block content %}
+    <ul>
+{% for item in items %}        <li>{{item.title}} | {{item.description}} Стоимость: {{item.cost}} <button>Купить</button></li>
+{% endfor %}    </ul>{% endblock %}

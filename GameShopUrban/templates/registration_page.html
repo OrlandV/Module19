@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body>{% for key, message in info.items %}{% if key == 'error' %}
+    <b>{{ message }}</b>{% endif %}{% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        <table>{% if form %}
+  {{ form.as_table }}{% else %}
+            <tr>
+                <th><label for="id_username">Введите логин:</label></th>
+                <td><input type="text" name="username" id="id_username" maxlength="30" required></td>
+            </tr>
+            <tr>
+                <th><label for="id_password">Введите пароль:</label></th>
+                <td><input type="password" name="password" id="id_password" minlength="8" required></td>
+            </tr>
+            <tr>
+                <th><label for="id_repeat_password">Повторите пароль:</label></th>
+                <td><input type="password" name="repeat_password" id="id_repeat_password" minlength="8" required></td>
+            </tr>
+            <tr>
+                <th><label for="id_age">Введите свой возраст:</label></th>
+                <td><input type="number" name="age" id="id_age" max="150" required></td>
+            </tr>{% endif %}
+            <tr><td colspan="2" align="center"><button type="submit">Отправить</button></td></tr>{% for key, username in info.items %}{% if key == 'successful' %}
+            <tr><td colspan="2" align="center"><h3 align="center">Приветствуем, {{ username }}!</h3></td></tr>{% endif %}{% endfor %}
+        </table>
+    </form>
+</body>
+</html>
