@@ -1,4 +1,19 @@
 {% extends "menu.html" %}{% block content %}
     <ul>
-{% for item in items %}        <li>{{item.title}} | {{item.description}} Стоимость: {{item.cost}} <button>Купить</button></li>
-{% endfor %}    </ul>{% endblock %}
+{% for item in page_games %}        <li>{{item.title}} | {{item.description}} Стоимость: {{item.cost}} <button>Купить</button></li>
+{% endfor %}    </ul>
+    <div class="pagination">
+        <p>
+            Страницы: {% if page_games.has_previous %}<a href="?per_page={{ page_games.paginator.per_page }}&page=1"><<</a>
+            <a href="?per_page={{ page_games.paginator.per_page }}&page={{ page_games.previous_page_number }}">Previous</a>{% endif %}
+            {{ page_games.number }}/{{ page_games.paginator.num_pages }}{% if page_games.has_next %}
+            <a href="?per_page={{ page_games.paginator.per_page }}&page={{ page_games.next_page_number }}">Next</a>
+            <a href="?per_page={{ page_games.paginator.per_page }}&page={{ page_games.paginator.num_pages }}">>></a>{% endif %}
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <label>Количество на странице: </label>
+            <input type="number" name="per_page" min="1" value="{{ page_games.paginator.per_page }}">
+            <button type="submit">OK</button>
+        </form>
+    </div>{% endblock %}

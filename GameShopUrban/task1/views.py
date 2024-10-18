@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from .forms import *
 from .models import *
 
@@ -11,9 +12,14 @@ def platform(request):
 
 
 def games(request):
+    if not (per_page := request.POST.get('per_page')):
+        per_page = request.GET.get('per_page')
+    per_page = int(per_page) if per_page is not None and per_page.isdigit() else 3
+    paginator = Paginator(Game.objects.all(), per_page)
+    page_number = request.GET.get('page')
     context = {
         'title': 'Игры',
-        'items': Game.objects.all()
+        'page_games': paginator.get_page(page_number)
     }
     return render(request, 'games.html', context)
 
